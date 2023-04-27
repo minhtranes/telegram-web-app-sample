@@ -12,9 +12,10 @@ export function AddItem({ fncAddItem }) {
     setShow(false)
   }
 
-  const items = getItemList()
+  const [items, setItems] = useState([])
 
   useEffect(() => {
+    getItemList().then(data => setItems(data))
   }, []);
 
   const handleItemSelection = (e) => {
