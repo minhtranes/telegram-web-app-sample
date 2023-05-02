@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useLocation } from "react-router-dom";
 import { getInvoice, saveInvoice } from "../../db/invoice";
 import { EditItem } from "./EditItem";
 import { TextInput, Label } from 'flowbite-react';
@@ -30,11 +30,18 @@ export const EditInvoice = () => {
   )
 
   const { invoiceId } = useParams()
+  const location = useLocation()
+  const [loc, setLoc] = useState({ pageNumber: 0, pageSize: 10 })
 
   useEffect(() => {
+    setLoc({
+      pageNumber: location.state.pageNumber,
+      pageSize: location.state.pageSize
+    })
+
     console.info("Eding invoice %s", invoiceId)
     getInvoice(invoiceId).then(data => setInvoice(data))
-  }, [invoiceId]);
+  }, [invoiceId,location]);
 
   const handleSaveItem = (item) => {
     console.info("Item %s is updated", item.id)
@@ -119,11 +126,15 @@ export const EditInvoice = () => {
     setInvoice(inv)
   }
 
+  
+
   return (
     <div class="bg-slate-50">
       <div class="py-2 px-2 space-x-3">
         <span onClick={handleSaveInvoice} className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">Save</span>
-        <Link to=".." relative="path" >Back</Link>
+        <Link to=".." state={{ pageNumber: loc.pageNumber, pageSize: loc.pageSize }} relative="path"
+          className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer"
+        >Back</Link>
       </div>
       <form class="flex flex-wrap mx-1">
         <div class="w-full md:w-1/2 px-1 mb-6">

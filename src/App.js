@@ -20,7 +20,7 @@ function App() {
     <Router>
       <div class="my-2 mx-2">
         <Link to="profit" class="px-3 py-2 bg-gray-200 text-amber-900 text-sm font-sans ">Profit</Link>
-        <Link to="invoice" class="px-3 py-2 bg-gray-200 text-amber-900 text-sm font-sans ">Invoice</Link>
+        <Link to="invoice" state={{ pageNumber: 0, pageSize: 10 }} class="px-3 py-2 bg-gray-200 text-amber-900 text-sm font-sans ">Invoice</Link>
         <Link to="expenses" state={{ pageNumber: 0, pageSize: 10 }} class="px-3 py-2 bg-gray-200 text-amber-900 text-sm font-sans ">Expense</Link>
       </div>
       <Routes>

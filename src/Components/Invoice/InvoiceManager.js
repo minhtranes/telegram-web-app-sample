@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import UpdateButton from "../Button/Button";
 import listLatestInvoices from "../../db/invoice";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import { Table } from "flowbite-react";
 
 
@@ -15,6 +15,8 @@ export function InvoiceManager() {
       "subTotal": 0
     }
   ])
+  
+  const location = useLocation()
 
   const [pagination, setPagination] = useState({
     pageNumber: 0,
@@ -28,10 +30,6 @@ export function InvoiceManager() {
     fetchData(pageNumber < 0 ? 0 : pageNumber > pagination.totalPages - 1 ? pagination.totalPages - 1 : pageNumber, pagination.pageSize)
   }
 
-  useEffect(() => {
-    fetchData(0, 10)
-  }, []);
-
   const fetchData = (pageNumber, pageSize) => {
     listLatestInvoices(pageNumber, pageSize)
       .then(data => {
@@ -44,6 +42,15 @@ export function InvoiceManager() {
         })
       })
   }
+  
+  useEffect(() => {
+    console.log(location)
+    fetchData(location.state.pageNumber, location.state.pageSize)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
+
 
 
   return (
@@ -83,7 +90,7 @@ export function InvoiceManager() {
                   {inv.subTotal.toLocaleString('us-US', { style: 'currency', currency: 'VND' })}
                 </Table.Cell>
                 <Table.Cell>
-                  <Link to={inv.id} className="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</Link>
+                  <Link to={inv.id} state={{ pageNumber: pagination.pageNumber, pageSize: pagination.pageSize }} className="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</Link>
                 </Table.Cell>
               </Table.Row>
             )
