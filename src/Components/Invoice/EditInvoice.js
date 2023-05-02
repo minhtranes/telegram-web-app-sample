@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getInvoice } from "../../db/invoice";
+import { getInvoice, saveInvoice } from "../../db/invoice";
 import { EditItem } from "./EditItem";
-import UpdateButton from "../Button/Button";
 import { TextInput, Label } from 'flowbite-react';
 
 import { AddItem } from "./AddItem";
@@ -91,6 +90,11 @@ export const EditInvoice = () => {
   const handleSaveInvoice = () => {
     console.info("Saving invoice")
     console.log(invoice)
+    saveInvoice(invoice)
+      .then(resp => {
+        console.log("Save invoice succsessfully. Here is the response detail")
+        console.log(resp)
+      })
   }
 
   const handleAddItem = (addedItem) => {
@@ -117,8 +121,8 @@ export const EditInvoice = () => {
 
   return (
     <div class="bg-slate-50">
-      <div class="py-2 px-2">
-        <UpdateButton title="Save" disable={false} onClick={handleSaveInvoice} />
+      <div class="py-2 px-2 space-x-3">
+        <span onClick={handleSaveInvoice} className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">Save</span>
         <Link to=".." relative="path" >Back</Link>
       </div>
       <form class="flex flex-wrap mx-1">
