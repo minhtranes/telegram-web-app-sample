@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Modal, ListGroup, Button } from 'flowbite-react';
-import { getItemList } from "../../db/invoice";
+import { getItemList } from "../../db/inventory";
 
 export function AddItem({ fncAddItem }) {
 

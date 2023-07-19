@@ -16,12 +16,6 @@ export function getInvoice(invoiceId) {
     .then(response => response.json())
 }
 
-export function getItemList() {
-  
-  return fetch(`${process.env.REACT_APP_INVENTORY_ENDPOINT}/api/inventory`, requestOptions)
-    .then(response => response.json())
-}
-
 export function saveInvoice(invoice) {
   console.info("Save invoice %s", invoice.id)
   return fetch(`${process.env.REACT_APP_INVOICE_SERVICE_ENDPOINT}/api/invoice/update`,
